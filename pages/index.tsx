@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { NextRouter, useRouter } from 'next/router';
 
 import styles from '../styles/Login.module.scss';
-import LoginBg from '../public/assets/loginBg.jpg';
 import { ROUTES } from '../config/route';
 
 export default function Home(): React.ReactElement {
@@ -22,7 +21,7 @@ export default function Home(): React.ReactElement {
       </Head>
 
       <main className={styles.main}>
-        <Image src={LoginBg} alt='background image' placeholder='blur' layout='fill' className={styles.main__bgImage} />
+        <Image src="/assets/loginBg.jpg" alt='background image' layout='fill' className={styles.main__bgImage} unoptimized={true} />
         <div className={styles.main__card}>
           <h1>
             Zedflix
