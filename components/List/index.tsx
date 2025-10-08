@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 
@@ -23,16 +23,16 @@ export default function List({
 }: ListProps): React.ReactElement {
   const [media, setMedia] = useState<Media[]>([]);
  
-  async function getEndpoint() {
+  const getEndpoint = useCallback(async () => {
     try {
       const result = await axios.get(endpoint);
       setMedia(result.data.data);
     } catch (error) {}
-  }
+  }, [endpoint]);
 
   useEffect(() => {
     getEndpoint();
-  }, []);
+  }, [getEndpoint]);
 
   return (
     <div className={styles.listContainer}>

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useCallback } from 'react';
 import axios from 'axios';
 
 import Button from '../Button';
@@ -8,11 +8,8 @@ import { Play, Info } from '../../utils/icons';
 import { ModalContext } from '../../context/ModalContext';
 import styles from '../../styles/Banner.module.scss';
 
-
-
 export default function Banner() {
   const [media, setMedia] = useState<Media>();
-  const random = Math.floor(Math.random() * 20);
   const { setModalData, setIsModal } = useContext(ModalContext);
 
   const onClick = (data: Media) => {
@@ -20,16 +17,17 @@ export default function Banner() {
     setIsModal(true);
   };
 
-  const getMedia = async () => {
+  const getMedia = useCallback(async () => {
     try {
+      const random = Math.floor(Math.random() * 20);
       const result = await axios.get('/api/popular?type=movie');
       setMedia(result.data.data[random]);
     } catch (error) {}
-  };
+  }, []);
 
   useEffect(() => {
     getMedia();
-  }, []);
+  }, [getMedia]);
 
   return (
     <div className={styles.spotlight}>
